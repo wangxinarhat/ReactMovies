@@ -16,9 +16,6 @@ var getTextFromScore = require('./getTextFromScore');
 
 class MovieCell extends React.Component {
 
-    componentWillMount() {
-
-    }
     render() {
 
         var criticsScore = this.props.movie.ratings.critics_score;
