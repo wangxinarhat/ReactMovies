@@ -15,9 +15,9 @@
  */
 'use strict';
 
-var React = require('react');
-var ReactNative = require('react-native');
-var {
+
+import React, { Component } from 'react';
+import {
   Image,
   Platform,
   StyleSheet,
@@ -25,14 +25,15 @@ var {
   TouchableHighlight,
   TouchableNativeFeedback,
   View
-} = ReactNative;
+} from 'react-native';
+
 
 var getStyleFromScore = require('./getStyleFromScore');
 var getImageSource = require('./getImageSource');
 var getTextFromScore = require('./getTextFromScore');
 
-var MovieCell = React.createClass({
-  render: function() {
+export default class MovieCell extends Component {
+  render() {
     var criticsScore = this.props.movie.ratings.critics_score;
     var TouchableElement = TouchableHighlight;
     if (Platform.OS === 'android') {
@@ -46,18 +47,18 @@ var MovieCell = React.createClass({
           onHideUnderlay={this.props.onUnhighlight}>
           <View style={styles.row}>
             <Image
-              source={getImageSource(this.props.movie, 'det')}
+              source={getImageSource(this.props.movie, 'det') }
               style={styles.cellImage}
-            />
+              />
             <View style={styles.textContainer}>
               <Text style={styles.movieTitle} numberOfLines={2}>
                 {this.props.movie.title}
               </Text>
               <Text style={styles.movieYear} numberOfLines={1}>
                 {this.props.movie.year}
-                {' '}&bull;{' '}
-                <Text style={getStyleFromScore(criticsScore)}>
-                  Critics {getTextFromScore(criticsScore)}
+                {' '}&bull; {' '}
+                <Text style={getStyleFromScore(criticsScore) }>
+                  Critics {getTextFromScore(criticsScore) }
                 </Text>
               </Text>
             </View>
@@ -66,7 +67,7 @@ var MovieCell = React.createClass({
       </View>
     );
   }
-});
+}
 
 var styles = StyleSheet.create({
   textContainer: {
@@ -101,4 +102,3 @@ var styles = StyleSheet.create({
   },
 });
 
-module.exports = MovieCell;

@@ -15,15 +15,20 @@
  */
 'use strict';
 
-var ReactNative = require('react-native');
-var {
-  StyleSheet,
-} = ReactNative;
+import {
+    StyleSheet,
+} from 'react-native';
+
 
 var MAX_VALUE = 200;
 
-import type { StyleObj } from 'StyleSheetTypes';
+import type ,{ StyleObj } from 'StyleSheetTypes';
 
+/**
+ * 根据电影评分，返回相应color
+ * @param score
+ * @returns {*}
+ */
 function getStyleFromScore(score: number): StyleObj {
   if (score < 0) {
     return styles.noScore;

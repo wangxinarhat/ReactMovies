@@ -15,6 +15,11 @@
  */
 'use strict';
 
+/**
+ * 获取缩略图链接
+ * @param movie
+ * @param kind
+ */
 function getImageSource(movie: Object, kind: ?string): {uri: ?string} {
   var uri = movie && movie.posters ? movie.posters.thumbnail : null;
   if (uri && kind) {

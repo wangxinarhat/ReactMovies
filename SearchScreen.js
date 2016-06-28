@@ -15,24 +15,26 @@
  */
 'use strict';
 
-var React = require('react');
-var ReactNative = require('react-native');
-var {
-  ActivityIndicator,
-  ListView,
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-} = ReactNative;
-var TimerMixin = require('react-timer-mixin');
 
-var invariant = require('fbjs/lib/invariant');
-var dismissKeyboard = require('dismissKeyboard');
+import React, { Component } from 'react';
+import {
+    ActivityIndicator,
+    ListView,
+    Platform,
+    StyleSheet,
+    Text,
+    View,
+} from 'react-native';
 
-var MovieCell = require('./MovieCell');
-var MovieScreen = require('./MovieScreen');
-var SearchBar = require('SearchBar');
+
+
+import TimerMixin from'react-timer-mixin';
+import invariant from'fbjs/lib/invariant';
+import dismissKeyboard from'dismissKeyboard';
+
+import MovieCell from './MovieCell';
+import MovieScreen from'./MovieScreen';
+import SearchBar from 'SearchBar';
 
 /**
  * This is for demo purposes only, and rate limited.
@@ -62,7 +64,7 @@ var SearchScreen = React.createClass({
 
   timeoutID: (null: any),
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       isLoading: false,
       isLoadingTail: false,
@@ -74,11 +76,11 @@ var SearchScreen = React.createClass({
     };
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     this.searchMovies('');
   },
 
-  _urlForQueryAndPage: function(query: string, pageNumber: number): string {
+  _urlForQueryAndPage(query: string, pageNumber: number): string {
     var apiKey = API_KEYS[this.state.queryNumber % API_KEYS.length];
     if (query) {
       return (
@@ -94,7 +96,7 @@ var SearchScreen = React.createClass({
     }
   },
 
-  searchMovies: function(query: string) {
+  searchMovies(query: string) {
     this.timeoutID = null;
 
     this.setState({filter: query});
@@ -150,7 +152,7 @@ var SearchScreen = React.createClass({
       .done();
   },
 
-  hasMore: function(): boolean {
+  hasMore(): boolean {
     var query = this.state.filter;
     if (!resultsCache.dataForQuery[query]) {
       return true;
@@ -161,7 +163,7 @@ var SearchScreen = React.createClass({
     );
   },
 
-  onEndReached: function() {
+  onEndReached() {
     var query = this.state.filter;
     if (!this.hasMore() || this.state.isLoadingTail) {
       // We're already fetching or have all the elements so noop
@@ -217,11 +219,11 @@ var SearchScreen = React.createClass({
       .done();
   },
 
-  getDataSource: function(movies: Array<any>): ListView.DataSource {
+  getDataSource(movies: Array<any>): ListView.DataSource {
     return this.state.dataSource.cloneWithRows(movies);
   },
 
-  selectMovie: function(movie: Object) {
+  selectMovie(movie: Object) {
     if (Platform.OS === 'ios') {
       this.props.navigator.push({
         title: movie.title,
@@ -238,14 +240,14 @@ var SearchScreen = React.createClass({
     }
   },
 
-  onSearchChange: function(event: Object) {
+  onSearchChange(event: Object) {
     var filter = event.nativeEvent.text.toLowerCase();
 
     this.clearTimeout(this.timeoutID);
     this.timeoutID = this.setTimeout(() => this.searchMovies(filter), 100);
   },
 
-  renderFooter: function() {
+  renderFooter() {
     if (!this.hasMore() || !this.state.isLoadingTail) {
       return <View style={styles.scrollSpinner} />;
     }
@@ -253,7 +255,7 @@ var SearchScreen = React.createClass({
     return <ActivityIndicator style={styles.scrollSpinner} />;
   },
 
-  renderSeparator: function(
+  renderSeparator(
     sectionID: number | string,
     rowID: number | string,
     adjacentRowHighlighted: boolean
@@ -267,7 +269,7 @@ var SearchScreen = React.createClass({
     );
   },
 
-  renderRow: function(
+  renderRow(
     movie: Object,
     sectionID: number | string,
     rowID: number | string,
@@ -284,7 +286,7 @@ var SearchScreen = React.createClass({
     );
   },
 
-  render: function() {
+  render() {
     var content = this.state.dataSource.getRowCount() === 0 ?
       <NoMovies
         filter={this.state.filter}
@@ -318,8 +320,10 @@ var SearchScreen = React.createClass({
   },
 });
 
-var NoMovies = React.createClass({
-  render: function() {
+
+
+class NoMovies extends Component{
+  render() {
     var text = '';
     if (this.props.filter) {
       text = `No results for "${this.props.filter}"`;
@@ -335,7 +339,7 @@ var NoMovies = React.createClass({
       </View>
     );
   }
-});
+}
 
 var styles = StyleSheet.create({
   container: {

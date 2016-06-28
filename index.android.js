@@ -16,19 +16,20 @@
  */
 'use strict';
 
-var React = require('react');
-var ReactNative = require('react-native');
-var {
-  AppRegistry,
-  BackAndroid,
-  Navigator,
-  StyleSheet,
-  ToolbarAndroid,
-  View,
-} = ReactNative;
+import React, { Component } from 'react';
+import {
+    AppRegistry,
+    BackAndroid,
+    Navigator,
+    StyleSheet,
+    ToolbarAndroid,
+    View,
+} from 'react-native';
 
-var MovieScreen = require('./MovieScreen');
-var SearchScreen = require('./SearchScreen');
+
+
+import MovieScreen from'./MovieScreen';
+import SearchScreen from './SearchScreen';
 
 var _navigator;
 BackAndroid.addEventListener('hardwareBackPress', () => {
@@ -65,8 +66,8 @@ var RouteMapper = function(route, navigationOperations, onComponentRef) {
   }
 };
 
-var ReactMovies = React.createClass({
-  render: function() {
+class ReactMovies extends Component{
+  render() {
     var initialRoute = {name: 'search'};
     return (
       <Navigator
@@ -77,7 +78,7 @@ var ReactMovies = React.createClass({
       />
     );
   }
-});
+}
 
 var styles = StyleSheet.create({
   container: {
@@ -92,4 +93,3 @@ var styles = StyleSheet.create({
 
 AppRegistry.registerComponent('ReactMovies', () => ReactMovies);
 
-module.exports = ReactMovies;

@@ -15,6 +15,11 @@
  */
 'use strict';
 
+/**
+ * 有评分+='%',否则N/A
+ * @param score
+ * @returns {string}
+ */
 function getTextFromScore(score: number): string {
   return score > 0 ? score + '%' : 'N/A';
 }
