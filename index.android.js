@@ -1,22 +1,34 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
+ * The examples provided by Facebook are for non-commercial testing and
+ * evaluation purposes only.
+ *
+ * Facebook reserves all rights not expressly granted.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NON INFRINGEMENT. IN NO EVENT SHALL
+ * FACEBOOK BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
+ * AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * @providesModule ReactMovies
  * @flow
  */
+'use strict';
 
-import React, { Component } from 'react';
-import {
+var React = require('react');
+var ReactNative = require('react-native');
+var {
   AppRegistry,
   BackAndroid,
   Navigator,
   StyleSheet,
   ToolbarAndroid,
   View,
-} from 'react-native';
+} = ReactNative;
 
-
-import MovieScreen from './MovieScreen';
-import SearchScreen from './SearchScreen';
+var MovieScreen = require('./MovieScreen');
+var SearchScreen = require('./SearchScreen');
 
 var _navigator;
 BackAndroid.addEventListener('hardwareBackPress', () => {
@@ -27,7 +39,7 @@ BackAndroid.addEventListener('hardwareBackPress', () => {
   return false;
 });
 
-var RouteMapper = function (route, navigationOperations, onComponentRef) {
+var RouteMapper = function(route, navigationOperations, onComponentRef) {
   _navigator = navigationOperations;
   if (route.name === 'search') {
     return (
@@ -35,38 +47,38 @@ var RouteMapper = function (route, navigationOperations, onComponentRef) {
     );
   } else if (route.name === 'movie') {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{flex: 1}}>
         <ToolbarAndroid
           actions={[]}
-          navIcon={require('image!android_back_white') }
+          navIcon={require('image!android_back_white')}
           onIconClicked={navigationOperations.pop}
           style={styles.toolbar}
           titleColor="white"
           title={route.movie.title} />
         <MovieScreen
-          style={{ flex: 1 }}
+          style={{flex: 1}}
           navigator={navigationOperations}
           movie={route.movie}
-          />
+        />
       </View>
     );
   }
 };
 
-export default class ReactMovies extends Component {
-  render() {
-    var initialRoute = { name: 'search' };
+var ReactMovies = React.createClass({
+  render: function() {
+    var initialRoute = {name: 'search'};
     return (
       <Navigator
         style={styles.container}
         initialRoute={initialRoute}
         configureScene={() => Navigator.SceneConfigs.FadeAndroid}
         renderScene={RouteMapper}
-        />
+      />
     );
   }
+});
 
-}
 var styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -79,3 +91,5 @@ var styles = StyleSheet.create({
 });
 
 AppRegistry.registerComponent('ReactMovies', () => ReactMovies);
+
+module.exports = ReactMovies;

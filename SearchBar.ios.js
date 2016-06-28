@@ -11,7 +11,7 @@
  * AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
- * @providesModule ReactMovies
+ * @providesModule SearchBar
  * @flow
  */
 'use strict';
@@ -19,34 +19,49 @@
 var React = require('react');
 var ReactNative = require('react-native');
 var {
-  AppRegistry,
-  NavigatorIOS,
+  ActivityIndicator,
+  TextInput,
   StyleSheet,
+  View,
 } = ReactNative;
 
-var SearchScreen = require('./SearchScreen');
-
-var ReactMovies = React.createClass({
+var SearchBar = React.createClass({
   render: function() {
     return (
-      <NavigatorIOS
-        style={styles.container}
-        initialRoute={{
-          title: 'Movies',
-          component: SearchScreen,
-        }}
-      />
+      <View style={styles.searchBar}>
+        <TextInput
+          autoCapitalize="none"
+          autoCorrect={false}
+          onChange={this.props.onSearchChange}
+          placeholder="Search a movie..."
+          onFocus={this.props.onFocus}
+          style={styles.searchBarInput}
+        />
+        <ActivityIndicator
+          animating={this.props.isLoading}
+          style={styles.spinner}
+        />
+      </View>
     );
   }
 });
 
 var styles = StyleSheet.create({
-  container: {
+  searchBar: {
+    marginTop: 64,
+    padding: 3,
+    paddingLeft: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  searchBarInput: {
+    fontSize: 15,
     flex: 1,
-    backgroundColor: 'white',
+    height: 30,
+  },
+  spinner: {
+    width: 30,
   },
 });
 
-AppRegistry.registerComponent('ReactMovies', () => ReactMovies);
-
-module.exports = ReactMovies;
+module.exports = SearchBar;
